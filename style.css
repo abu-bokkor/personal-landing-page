@@ -1,0 +1,227 @@
+/* =========================================
+   1. RESET E CONFIGURAÇÕES GLOBAIS
+   ========================================= */
+
+/* O seletor '*' aplica essas regras a TODOS os elementos da página */
+* {
+    margin: 0; /* Remove margens padrão do navegador */
+    padding: 0; /* Remove preenchimentos padrão do navegador */
+    box-sizing: border-box; /* Garante que bordas e paddings não quebrem o tamanho definido dos elementos */
+    font-family: 'Fira Code', monospace; /* Aplica a fonte estilo código em tudo */
+}
+
+/* Configuração do fundo e do comportamento do corpo do site */
+body {
+    background-color: #0b0f15; /* Um tom de preto bem fechado, estilo terminal */
+    color: #c9d1d9; /* Cor do texto padrão (um cinza bem claro/azulado) */
+    line-height: 1.6; /* Espaçamento entre as linhas para facilitar a leitura */
+    overflow-x: hidden; /* Esconde qualquer barra de rolagem horizontal indesejada */
+    display: flex; /* Transforma o body em um contêiner flexível... */
+    flex-direction: column; /* ...onde os elementos ficam em formato de coluna (um embaixo do outro) */
+    min-height: 100vh; /* Garante que o site ocupe pelo menos 100% da altura da tela (ViewPort Height) */
+}
+
+/* =========================================
+   2. ELEMENTOS DE FUNDO E LAYOUT PRINCIPAL
+   ========================================= */
+
+/* O Canvas fica travado no fundo de tudo (onde os pontinhos brancos se mexem) */
+#canvas {
+    position: fixed; /* Fixa o elemento na tela, mesmo se o usuário rolar a página */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Joga o canvas para trás de todo o resto do conteúdo */
+}
+
+/* O contêiner principal que abraça todo o conteúdo do meio */
+main {
+    flex: 1; /* Faz o main crescer e empurrar o rodapé para o final da tela */
+    display: flex; /* Ativa o modo flexbox para centralizar o conteúdo */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    padding: 60px 20px;
+}
+
+/* =========================================
+   3. SEÇÃO HERO (SUA APRESENTAÇÃO)
+   ========================================= */
+
+/* Limitando a largura para o texto não ficar muito espalhado em telas gigantes */
+.hero {
+    max-width: 800px;
+    width: 100%;
+    text-align: center; /* Centraliza todos os textos dessa área */
+}
+
+.greeting {
+    color: #8b949e;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.hero h1 {
+    font-size: 4rem; /* Nome com grande destaque */
+    color: #e6edf3;
+    margin-bottom: 25px;
+    letter-spacing: -2px; /* Junta um pouquinho as letras para um visual moderno */
+}
+
+.bio p {
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+    color: #8b949e; /* Textos com cor mais sutil que o título para não brigar pela atenção */
+}
+
+/* =========================================
+   4. LISTA DE HABILIDADES
+   ========================================= */
+
+/* Deixando as habilidades legíveis, mas alinhadas no centro da tela */
+.skills-list {
+    list-style-type: none; /* Remove as "bolinhas" padrão da lista do HTML */
+    margin: 20px auto 30px auto;
+    padding: 0;
+    text-align: left; /* O bloco em si fica no centro, mas o texto dentro dele fica alinhado à esquerda */
+    display: inline-block; /* Permite que o bloco obedeça o margin auto (centralização) */
+}
+
+.skills-list li {
+    margin-bottom: 8px;
+    color: #8b949e;
+}
+
+.skills-list strong {
+    color: #e6edf3; /* Destaca os títulos das habilidades (ex: Dados, Infraestrutura) */
+}
+
+/* =========================================
+   5. BOTÕES COM BORDA ANIMADA (O TRUQUE MÁGICO)
+   ========================================= */
+
+.social-links {
+    list-style: none;
+    display: flex; /* Coloca os botões um ao lado do outro */
+    justify-content: center;
+    gap: 25px; /* Cria um espaço de 25px entre os botões */
+    margin: 40px 0;
+}
+
+/* A estrutura base do botão */
+.animated-btn {
+    position: relative; /* Transforma o botão no ponto de referência para os elementos absolutos dentro dele */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 50px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    border-radius: 50px; /* Arredonda os cantos, criando formato de pílula */
+    background: transparent;
+    overflow: hidden; /* Muito importante: Corta qualquer coisa que ultrapasse os limites arredondados do botão */
+    z-index: 1; /* MUITO IMPORTANTE: Prende as camadas (Contexto de Empilhamento) dentro do botão */
+    transition: transform 0.2s ease; /* Cria uma transição suave quando o botão aumenta de tamanho no hover */
+}
+
+/* O texto do botão isolado na frente de tudo */
+.animated-btn span {
+    position: relative;
+    z-index: 2; /* Fica acima do fundo preto */
+}
+
+/* O "fundo preto" interno do botão (Camada do meio) */
+.animated-btn::before {
+    content: ""; /* Elementos before/after precisam da propriedade content, mesmo que vazia, para existir */
+    position: absolute;
+    /* Usando top/bottom/left/right garante compatibilidade. Deixa exatamente 2px de sobra para o gradiente aparecer. */
+    top: 2px;
+    bottom: 2px;
+    left: 2px;
+    right: 2px;
+    background-color: #0b0f15; /* O mesmo preto do fundo da página */
+    border-radius: 50px;
+    z-index: -1; /* Fica logo atrás do texto, escondendo o centro do gradiente */
+}
+
+/* O gradiente colorido que vai girar (Camada do fundo) */
+.animated-btn::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150%;
+    height: 300%; /* Bem maior que o botão para garantir que não falte cor enquanto ele gira */
+    /* Cria um formato de "pizza" colorida. A última cor é igual à primeira para fechar o ciclo sem cortes */
+    background: conic-gradient(from 0deg, #0044ff, #cc00ff, #00d4ff, #0044ff);
+    transform: translate(-50%, -50%) rotate(0deg); /* Centraliza perfeitamente o centro do giro */
+    z-index: -2; /* Fica atrás de tudo (do texto e do fundo preto) */
+    transition: opacity 0.3s;
+    /* A animação agora fica aqui, rodando infinitamente sem depender do mouse! */
+    animation: rotateGlow 1.5s linear infinite; 
+}
+
+/* Interatividade: O que acontece quando passa o mouse (hover) */
+.animated-btn:hover {
+    transform: scale(1.05); /* O botão inteiro cresce 5% */
+}
+
+.social-links a:hover::before {
+    filter: blur(4px); /* A borda ganha um brilho sutil (glow) */
+}
+
+/* Motor do giro infinito da borda */
+@keyframes rotateGlow {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg); /* Dá uma volta completa (360 graus) */
+    }
+}
+
+/* =========================================
+   6. RODAPÉ E EFEITOS DO JAVASCRIPT
+   ========================================= */
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #8b949e;
+    font-size: 0.9rem;
+}
+
+/* --- EFEITO TYPEWRITER E CURSOR --- */
+.cursor {
+    display: inline-block;
+    font-weight: bold;
+    color: #e6edf3;
+    animation: blink 0.8s step-end infinite; /* Aplica a animação 'blink' indefinidamente */
+}
+
+/* Motor da animação de piscar do cursor */
+@keyframes blink {
+    0%, 100% { opacity: 1; } /* Fica visível no início e no fim do ciclo */
+    50% { opacity: 0; } /* Fica invisível na metade do tempo, criando o piscar */
+}
+
+/* Classes de fonte que o JavaScript altera dinamicamente no seu nome */
+.font-primary {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.font-coding {
+    font-family: 'Fira Code', monospace;
+    font-weight: normal; /* Fontes de código costumam ficar melhores sem negrito extra */
+}
+
+/* --- RESPONSIVIDADE PARA CELULARES --- */
+@media (max-width: 600px) {
+    .social-links {
+        flex-direction: column; /* Muda a direção de linha para coluna */
+        align-items: center;    /* Centraliza os botões */
+        gap: 15px;              /* Diminui um pouco o espaço entre eles no celular */
+    }
+}
