@@ -14,11 +14,11 @@ A modern, responsive personal landing page designed for performance and interact
 
 ## How to Run
 1. Clone this repository:
-   `git clone https://github.com/SEU-USUARIO/personal-landing-page.git`
+   `git clone https://github.com/abu-bokkor/personal-landing-page.git`
 2. Open `index.html` in your favorite web browser.
 
 ## Deployment
 This project is live at: [https://bokkor.com](https://bokkor.com)
 
 ---
-*Created by Abu Bokkor*
+*Created by Bokkor*
