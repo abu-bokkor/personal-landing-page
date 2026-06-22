@@ -21,4 +21,4 @@ A modern, responsive personal landing page designed for performance and interact
 This project is live at: [https://bokkor.com](https://bokkor.com)
 
 ---
-*Created by [Seu Nome]*
+*Created by Abu Bokkor*
